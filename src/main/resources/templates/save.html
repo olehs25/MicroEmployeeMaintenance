@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Agergar Empleado</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="../static/css/bootstrap.css" rel="stylesheet"
+          th:href="@{/css/bootstrap.css}">
+</head>
+<body>
+<div class="container">
+    <br>
+    <h2>
+        Agregar Empleado</h2>
+    <form action="#" th:action="@{/save}" th:object="${employee}"
+          method="post">
+        &nbsp;
+        <div class="form-group">
+            <label for="fullName">FullName</label> <input type="text" size="5" style="width:500px"
+                                                      class="form-control" id="fullName" th:field="*{fullName}"
+                                                          name="fullName">
+        </div>
+        &nbsp;
+        <input type="hidden" th:field="*{id}" name="id" id="id">
+        <div class="form-group">
+            <label for="Nif">Nif</label> <input type="text" size="5" style="width:500px"
+                                                        class="form-control" id="nif" th:field="*{nif}"
+                                                        name="nif">
+        </div>
+        &nbsp;
+        <div class="form-group">
+            <label for="BirthDate">BirthDate</label> <input type="Date" size="5" style="width:150px"
+                                                         class="form-control" id="birthDate" th:field="*{birthDate}"
+                                                         name="birthDate">
+        </div>
+        &nbsp;
+        <div class="form-group">
+            <label for="personalPhone">PersonalPhone</label> <input type="text" size="5" style="width:500px"
+                                                        class="form-control" id="personalPhone" th:field="*{personalPhone}"
+                                                        name="personalPhone">
+        </div>
+        &nbsp;
+        <div class="form-group">
+            <label for="email">Email</label> <input type="text" size="5" style="width:500px"
+                                                          class="form-control" id="email" th:field="*{email}"
+                                                          name="email">
+        </div>
+        &nbsp;
+        <div class="form-group">
+            <label for="country">Country</label> <input type="text" size="5" style="width:500px"
+                                                class="form-control" id="country" th:field="*{country}"
+                                                name="country">
+        </div>
+        &nbsp;
+        <div class="form-group">
+            <label for="area">Area</label> <input type="text" size="5" style="width:500px"
+                                                            class="form-control" id="area" th:field="*{area}"
+                                                            name="area">
+        </div>
+        <br>
+        <button type="submit" class="btn btn-success">Guardar</button>
+    </form>
+    <br>
+</div>
+</body>
+</html>

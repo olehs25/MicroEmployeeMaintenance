@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>CRUD Springboot</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="../static/css/bootstrap.css" rel="stylesheet"
+          th:href="@{/css/bootstrap.css}">
+</head>
+<body>
+<div class="container">
+    <br>
+    <h2 th:if="${list.isEmpty()}">
+        No existen empleados registrados</h2>
+    <div th:if="${!list.isEmpty()}">
+        <h2>
+            Mantenimiento de Empleados</h2>
+        <br>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>FullName</th>
+                <th>Nif</th>
+                <th>BirthDate</th>
+                <th>PersonalPhone</th>
+                <th>Email</th>
+                <th>Country</th>
+                <th>Area</th>
+                <th>CreationDate</th>
+                <th>Editar</th>
+                <th>Eliminar</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="Employee : ${list}">
+                <td th:text="${Employee.id}">
+                <td th:text="${Employee.fullName}">
+                <td th:text="${Employee.nif}">
+                <td th:text="${Employee.birthDate}">
+                <td th:text="${Employee.personalPhone}">
+                <td th:text="${Employee.email}">
+                <td th:text="${Employee.country}">
+                <td th:text="${Employee.area}">
+                <td th:text="${Employee.creationDate}">
+                <td><a class="btn btn-info" th:href="@{/save/{id}(id=${Employee.id})}">Editar</a></td>
+                <td><a class="btn btn-danger" th:href="@{/delete/{id}(id=${Employee.id})}">Eliminar</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <br>
+    <div>
+         <a href="/save/0" class="btn btn-primary">Agregar</a>
+    </div>
+</div>
+</div>
+</body>
+</html>
