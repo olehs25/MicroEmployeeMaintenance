@@ -58,6 +58,12 @@
                                                             class="form-control" id="area" th:field="*{area}"
                                                             name="area" required>
         </div>
+        &nbsp;
+        <div class="form-group">
+            <label for="login">Login</label> <input type="text" pattern="[a-zA-Z ]{2,254}" size="5" style="width:500px"
+                                                  class="form-control" id="login" th:field="*{login}"
+                                                  name="login" required>
+        </div>
         <br>
         <button type="submit" class="btn btn-success">Guardar</button>
     </form>
