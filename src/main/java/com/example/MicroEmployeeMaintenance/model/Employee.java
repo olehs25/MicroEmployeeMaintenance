@@ -1,19 +1,13 @@
 package com.example.MicroEmployeeMaintenance.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Locale;
 
 @EnableJpaAuditing
 @Data
@@ -40,7 +34,10 @@ public class Employee implements Serializable {
     @GeneratedValue
     @LastModifiedDate
     private LocalDateTime creationDate;
-
+    @Column
+    private int active;
+    @Column
+    private  String login;
     @PrePersist
     @PreUpdate
     private void prepareDate() {

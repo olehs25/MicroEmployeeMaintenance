@@ -45,8 +45,11 @@
                 <th>Country</th>
                 <th>Area</th>
                 <th>CreationDate</th>
+                <th>Active</th>
+                <th>Login</th>
                 <th>Editar</th>
                 <th>Eliminar</th>
+
             </tr>
             </thead>
             <tbody>
@@ -60,6 +63,8 @@
                 <td th:text="${Employee.country}">
                 <td th:text="${Employee.area}">
                 <td th:text="${Employee.creationDate}">
+                <td th:text="${Employee.active}">
+                <td th:text="${Employee.login}">
                 <td><a class="btn btn-info" id="exclude" th:href="@{/save/{id}(id=${Employee.id})}">Editar</a></td>
                 <td><a class="btn btn-danger" id="exclude2" th:href="@{/delete/{id}(id=${Employee.id})}">Eliminar</a></td>
             </tr>
