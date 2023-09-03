@@ -39,6 +39,9 @@ public class EmployeeControllerWeb {
     public String save(Employee employee, Model model) {
         employee.setCreationDate(LocalDateTime.now());
         employee.setActive(1);
+        String[] login = employee.getEmail().split("@");
+        String part1 = login[0];
+        employee.setLogin(part1);
         employeeServiceWeb.save(employee);
         return "redirect:/";
     }

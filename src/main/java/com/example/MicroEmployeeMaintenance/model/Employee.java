@@ -37,7 +37,9 @@ public class Employee implements Serializable {
     @Column
     private int active;
     @Column
-    private  String login;
+    private String login;
+    @Column
+    private String language;
     @PrePersist
     @PreUpdate
     private void prepareDate() {

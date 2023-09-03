@@ -47,6 +47,7 @@
                 <th>CreationDate</th>
                 <th>Active</th>
                 <th>Login</th>
+                <th>Language</th>
                 <th>Editar</th>
                 <th>Eliminar</th>
 
@@ -65,13 +66,15 @@
                 <td th:text="${Employee.creationDate}">
                 <td th:text="${Employee.active}">
                 <td th:text="${Employee.login}">
+                <td th:text="${Employee.language}">
                 <td><a class="btn btn-info" id="exclude" th:href="@{/save/{id}(id=${Employee.id})}">Editar</a></td>
                 <td><a class="btn btn-danger" id="exclude2" th:href="@{/delete/{id}(id=${Employee.id})}">Eliminar</a></td>
             </tr>
             </tbody>
+
         </table>
     </div>
-    <br>
+    <br><br><br>
     <div>
          <a href="/save/0" class="btn btn-primary">Agregar Empleados</a>
     </div>
