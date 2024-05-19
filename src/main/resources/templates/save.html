@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Agergar Empleado</title>
+    <title>Agregar Administradores</title>
 
     <!-- Bootstrap CSS -->
     <link href="../static/css/bootstrap.css" rel="stylesheet"
@@ -12,7 +12,7 @@
 <div class="container">
     <br>
     <h2>
-        Agregar Empleado</h2>
+        Agregar Admin</h2>
     <form action="#" th:action="@{/save}" th:object="${employee}"
           method="post">
         &nbsp;
@@ -30,12 +30,6 @@
         </div>
         &nbsp;
         <div class="form-group">
-            <label for="BirthDate">BirthDate</label> <input type="Date" size="5" style="width:150px"
-                                                         class="form-control" id="birthDate" th:field="*{birthDate}"
-                                                         name="birthDate" required>
-        </div>
-        &nbsp;
-        <div class="form-group">
             <label for="personalPhone">PersonalPhone</label> <input type="tel" size="5" style="width:500px"
                                                         class="form-control" id="personalPhone" th:field="*{personalPhone}"
                                                         name="personalPhone" required>
@@ -49,21 +43,15 @@
         </div>
         &nbsp;
         <div class="form-group">
-            <label for="country">Country</label> <input type="text" pattern="[a-zA-Z ]{2,254}" size="5" style="width:500px"
-                                                class="form-control" id="country" th:field="*{country}"
-                                                name="country" required>
-        </div>
-        &nbsp;
-        <div class="form-group">
             <label for="area">Area</label> <input type="text" pattern="[a-zA-Z ]{2,254}" size="5" style="width:500px"
                                                             class="form-control" id="area" th:field="*{area}"
                                                             name="area" required>
         </div>
         &nbsp;
         <div class="form-group">
-            <label for="language">Language</label> <input type="text" pattern="[a-zA-Z ]{2,254}" size="5" style="width:500px"
-                                                  class="form-control" id="language" th:field="*{language}"
-                                                  name="language" required>
+            <label for="active">Active</label> <input type="number" pattern="[a-zA-Z ]{2,254}" size="5" style="width:500px"
+                                                  class="form-control" id="active" th:field="*{active}"
+                                                  name="active" required>
         </div>
         <br>
         <button type="submit" class="btn btn-success">Guardar</button>

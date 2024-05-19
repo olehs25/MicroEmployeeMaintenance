@@ -1,82 +1,84 @@
 package com.example.MicroEmployeeMaintenance.controller;
 
-import java.time.Instant;
-import java.time.LocalDate;
+import com.example.MicroEmployeeMaintenance.model.User;
+import com.example.MicroEmployeeMaintenance.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.example.MicroEmployeeMaintenance.model.Employee;
-import com.example.MicroEmployeeMaintenance.service.EmployeeService;
-
 
 @RestController
 @RequestMapping("/api/v1")
-public class EmployeeController {
+public class UserController {
 
     @Autowired
-    private EmployeeService employeeService;
+    private UserService userService;
 
-    @GetMapping(value="/getEmployees")
+    @GetMapping(value="/getUsers")
     public ResponseEntity<Object> get(){
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            List<Employee> list  = employeeService.findAll();
+            List<User> list  = userService.findAll();
             return new ResponseEntity<Object>(list,HttpStatus.OK);
         }
         catch (Exception e) {
-            map.put("Could not find employees", e.getMessage());
+            map.put("Could not find users", e.getMessage());
             return new ResponseEntity<>( map, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @GetMapping(value="/getEmployee/{id}")
+    @GetMapping(value="/getUser/{id}")
     public ResponseEntity<Object> getById(@PathVariable Long id){
         try {
-            Employee data  = employeeService.findById(id);
+            User data  = userService.findById(id);
             return new ResponseEntity<Object>(data,HttpStatus.OK);
         }
         catch (Exception e) {
             Map<String, Object> map = new HashMap<String, Object>();
-            map.put("The employee with this id does not exist", e.getMessage());
+            map.put("The user with this id does not exist", e.getMessage());
             return new ResponseEntity<>( map, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @PostMapping(value="/putEmployee")
-    public ResponseEntity<Object> create(@RequestBody Employee employee){
+    @GetMapping(value="/getUserByUsername/{username}")
+    public ResponseEntity<Object> getByUsername(@PathVariable String username){
+        try {
+            User data  = userService.findByUsername(username);
+            return new ResponseEntity<Object>(data,HttpStatus.OK);
+        }
+        catch (Exception e) {
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("The user with this username does not exist", e.getMessage());
+            return new ResponseEntity<>( map, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping(value="/putUser")
+    public ResponseEntity<Object> create(@RequestBody User user){
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            employee.setCreationDate(LocalDateTime.now());
-            Employee res = employeeService.save(employee);
+            user.setCreationDate(LocalDateTime.now());
+            User res = userService.save(user);
             return new ResponseEntity<Object>(res,HttpStatus.OK);
         }
         catch (Exception e) {
-            map.put("The employee with this data does not exist", e.getMessage());
+            map.put("The user with this data does not exist", e.getMessage());
             return new ResponseEntity<>( map, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @PutMapping("/updateEmployee/{id}")
-    public ResponseEntity<Object> update(@RequestBody Employee employee, @PathVariable Long id){
+    @PutMapping("/updateUser/{id}")
+    public ResponseEntity<Object> update(@RequestBody User employee, @PathVariable Long id){
         Map<String, Object> map = new HashMap<String, Object>();
         try {
 
-            Employee currentEmployee = employeeService.findById(id);
+            User currentEmployee = userService.findById(id);
 
             currentEmployee.setUsername(employee.getUsername());
             currentEmployee.setNif(employee.getNif());
@@ -92,12 +94,12 @@ public class EmployeeController {
         }
     }
 
-    @DeleteMapping("/deleteEmployee/{id}")
+    @DeleteMapping("/deleteUser/{id}")
     public ResponseEntity<Object> delete(@PathVariable Long id){
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            Employee currentEmployee = employeeService.findById(id);
-            employeeService.delete(currentEmployee);
+            User currentEmployee = userService.findById(id);
+            userService.delete(currentEmployee);
             map.put("deleted", true);
             return new ResponseEntity<Object>(map,HttpStatus.OK);
         }

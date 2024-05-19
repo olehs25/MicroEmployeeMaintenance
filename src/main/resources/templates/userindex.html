@@ -26,21 +26,22 @@
 <div class="container1">
     <br>
     <h2 th:if="${list.isEmpty()}">
-        No existen administradores registrados</h2>
+        No existen usuarios registrados</h2>
     <div th:if="${!list.isEmpty()}">
         <h2>
-            Mantenimiento de Administradores</h2>
+            Mantenimiento de Usuarios</h2>
         <br>
         <div class="card-body">
             <a id="btnExportar" class="btn btn-success">
                 <i class="fas fa-file-excel"></i> Exportar datos a Excel
             </a>
-                &nbsp;<a href="/save/0" class="btn btn-primary">Agregar Administrador
+                &nbsp;<a href="/user/save/0" class="btn btn-primary">Agregar Usuario
             </a>
-                  &nbsp;<a href="/user" class="btn btn-primary">Usuarios
+                 &nbsp;<a href="/" class="btn btn-primary">Administradores
 
             </a>
-        <br><br>
+
+            <br><br>
             <!--
             <br>
             <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Buscar por FullName..">
@@ -50,31 +51,37 @@
             <tr>
                 <th>Id</th>
                 <th>UserName</th>
+                <th>Password</th>
+                <th>Active</th>
+                <th>Area</th>
+                <th>Country</th>
+                <th>CreationDate</th>
+                <th>Email</th>
+                <th>Language</th>
+                <th>Login</th>
                 <th>Nif</th>
                 <th>PersonalPhone</th>
-                <th>Email</th>
-                <th>Area</th>
-                <th>CreationDate</th>
-                <th>Active</th>
-                <th>Login</th>
                 <th>Editar</th>
                 <th>Eliminar</th>
 
             </tr>
             </thead>
             <tbody>
-            <tr th:each="Employee : ${list}">
-                <td th:text="${Employee.id}">
-                <td th:text="${Employee.username}">
-                <td th:text="${Employee.nif}">
-                <td th:text="${Employee.personalPhone}">
-                <td th:text="${Employee.email}">
-                <td th:text="${Employee.area}">
-                <td th:text="${Employee.creationDate}">
-                <td th:text="${Employee.active}">
-                <td th:text="${Employee.login}">
-                <td><a class="btn btn-info" id="exclude"  th:href="@{/save/{id}(id=${Employee.id})}">Editar</a></td>
-                <td><a class="btn btn-danger" data-toggle="modal" id="exclude2" th:href="@{/delete/{id}(id=${Employee.id})}">Eliminar</a></td>
+            <tr th:each="User : ${list}">
+                <td th:text="${User.id}">
+                <td th:text="${User.username}">
+                <td th:text="${User.password}">
+                <td th:text="${User.active}">
+                <td th:text="${User.area}">
+                <td th:text="${User.country}">
+                <td th:text="${User.creationDate}">
+                <td th:text="${User.email}">
+                <td th:text="${User.language}">
+                <td th:text="${User.login}">
+                <td th:text="${User.nif}">
+                <td th:text="${User.personalPhone}">
+                <td><a class="btn btn-info" id="exclude"  th:href="@{/user/save/{id}(id=${User.id})}">Editar</a></td>
+                <td><a class="btn btn-danger" data-toggle="modal" id="exclude2" th:href="@{/user/delete/{id}(id=${User.id})}">Eliminar</a></td>
             </tr>
             </tbody>
 
@@ -90,9 +97,9 @@
     $btnExportar.addEventListener("click", function() {
         let tableExport = new TableExport($tabla, {
             exportButtons: false, // No queremos botones
-            filename: "Employees", //Nombre del archivo de Excel
-            sheetname: "Employees", //Título de la hoja
-             ignoreCols: [12,13],
+            filename: "Users", //Nombre del archivo de Excel
+            sheetname: "Users", //Título de la hoja
+             ignoreCols: [13,14],
         });
         let datos = tableExport.getExportData();
         let preferenciasDocumento = datos.tabla.xlsx;
