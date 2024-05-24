@@ -64,6 +64,10 @@ public class UserController {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
             user.setCreationDate(LocalDateTime.now());
+            String[] login = user.getEmail().split("@");
+            String part1 = login[0];
+            user.setLogin(part1);
+            user.setActive(1);
             User res = userService.save(user);
             return new ResponseEntity<Object>(res,HttpStatus.OK);
         }
@@ -79,12 +83,17 @@ public class UserController {
         try {
 
             User currentEmployee = userService.findById(id);
-
             currentEmployee.setUsername(employee.getUsername());
             currentEmployee.setNif(employee.getNif());
             currentEmployee.setPersonalPhone(employee.getPersonalPhone());
             currentEmployee.setEmail(employee.getEmail());
             currentEmployee.setArea(employee.getArea());
+            currentEmployee.setCountry(employee.getCountry());
+            currentEmployee.setPassword(employee.getPassword());
+            currentEmployee.setLanguage(employee.getLanguage());
+            if(employee.getCreationDate()==null){
+                currentEmployee.setCreationDate(currentEmployee.getCreationDate());
+            }
 
             return new ResponseEntity<Object>(currentEmployee,HttpStatus.OK);
         }

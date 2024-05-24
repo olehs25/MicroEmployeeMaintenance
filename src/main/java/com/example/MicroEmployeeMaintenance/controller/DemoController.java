@@ -6,16 +6,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/demo")
 @RequiredArgsConstructor
 public class DemoController {
 
-    /*
-    @PostMapping(value = "demo")
+
+    @PostMapping(value = "api")
     public String demo()
     {
         return "Demo from secure endpoint";
     }
-    */
+
 
 }

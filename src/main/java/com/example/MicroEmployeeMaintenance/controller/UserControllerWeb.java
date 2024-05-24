@@ -2,7 +2,6 @@ package com.example.MicroEmployeeMaintenance.controller;
 
 import com.example.MicroEmployeeMaintenance.model.User;
 import com.example.MicroEmployeeMaintenance.service.UserServiceWeb;
-import com.example.MicroEmployeeMaintenance.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,11 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import  com.example.MicroEmployeeMaintenance.service.UserDetailService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 
 @Controller
@@ -22,9 +19,6 @@ public class UserControllerWeb {
 
     @Autowired
     private UserServiceWeb userServiceWeb;
-
-    @Autowired
-   private UserDetailService userDetailService;
 
     @Autowired
     private  PasswordEncoder passEncoder;
