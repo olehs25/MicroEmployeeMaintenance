@@ -25,6 +25,8 @@ import { ProfileComponent} from "../app/profile/profile.component";
 import { AppRoutingModule} from "./app-routing.modules";
 import { TenisFooterComponent} from "../app/tenis-footer/tenis-footer.component";
 import {MdbRippleModule} from "mdb-angular-ui-kit/ripple";
+import {DashboardComponent} from "../app/dashboard/dashboard.component";
+import {NgImageSliderModule} from "ng-image-slider";
 
 
 @NgModule({
@@ -33,6 +35,7 @@ import {MdbRippleModule} from "mdb-angular-ui-kit/ripple";
     TenisbarComponent,
     RegisterComponent,
     TenisDashboardComponent,
+    DashboardComponent,
     LoginComponent,
     MapComponent,
     ProfileComponent,
@@ -58,7 +61,8 @@ import {MdbRippleModule} from "mdb-angular-ui-kit/ripple";
     HttpClientModule,
     MatButtonModule,
     AppRoutingModule,
-    MdbRippleModule
+    MdbRippleModule,
+    NgImageSliderModule
   ],
   exports: [TenisbarComponent, TenisFooterComponent],
   providers: [HttpClient],

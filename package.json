@@ -30,6 +30,7 @@
     "j": "^1.0.0",
     "leaflet": "^1.9.4",
     "mdb-angular-ui-kit": "^5.0.0",
+    "ng-image-slider": "^7.0.1",
     "ol": "^8.1.0",
     "query": "^0.2.0",
     "rxjs": "~7.8.0",

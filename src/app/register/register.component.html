@@ -1,0 +1,66 @@
+<div class="login">
+  <mat-card>
+    <div>
+      <div class="image">
+        <br>
+        <img src="assets/images/logo.png" style="width: 9%" alt="">
+      </div>
+    </div>
+    <form (ngSubmit)="formSubmit()" style="margin: 1%;">
+      <h2>Página de registro</h2>
+      <mat-form-field class="fields" appearance="outline">
+        <mat-icon class="primary-icon" matIconPrefix="">account_circle</mat-icon>
+        <mat-label>Nombre</mat-label>
+        <input [(ngModel)]="usuario.nombre" name="nombre" required type="text" matInput placeholder="Introduzca su nombre" />
+      </mat-form-field>
+      <br>
+      <mat-form-field class="fields" appearance="outline">
+        <mat-icon class="primary-icon" matIconPrefix="">account_circle</mat-icon>
+        <mat-label>Apellidos</mat-label>
+        <input [(ngModel)]="usuario.apellidos" name="apellidos" required type="text" matInput placeholder="Introduzca sus apellidos" />
+      </mat-form-field>
+      <br>
+      <mat-form-field class="fields" appearance="outline">
+        <mat-icon class="primary-icon" matIconPrefix="">perm_identity</mat-icon>
+        <mat-label>DNI</mat-label>
+        <input [(ngModel)]="usuario.dni" name="dni" required type="text" matInput placeholder="Introduzca su DNI/NIE" />
+      </mat-form-field>
+      <br>
+      <mat-form-field class="fields" appearance="outline">
+        <mat-icon class="primary-icon" matIconPrefix="">alternate_email</mat-icon>
+        <mat-label>Email</mat-label>
+        <input [(ngModel)]="usuario.email" name="email" required type="email" matInput placeholder="Introduzca su correo electrónico" />
+
+      </mat-form-field>
+      <br>
+      <mat-form-field class="fields" appearance="outline">
+        <mat-icon class="primary-icon" matIconPrefix="">call</mat-icon>
+        <mat-label>Teléfono</mat-label>
+        <input [(ngModel)]="usuario.telefono" name="telefono" required type="long" matInput placeholder="Introduzca su número de teléfono" />
+      </mat-form-field>
+      <br>
+      <mat-form-field class="fields" appearance="outline">
+        <mat-icon class="primary-icon" matIconPrefix="">date_range</mat-icon>
+        <mat-label>Fecha de nacimiento</mat-label>
+        <input [(ngModel)]="usuario.birthDate" name="birthDate" required type="date" matInput placeholder="Introduzca su fecha de nacimiento" />
+      </mat-form-field>
+      <br>
+      <mat-form-field class="fields" appearance="outline">
+        <mat-icon class="primary-icon" matIconPrefix="">key</mat-icon>
+        <mat-label>Contraseña</mat-label>
+        <input [(ngModel)]="usuario.password" name="password" required [type]="hide ? 'password' : 'text'" matInput placeholder="Introduzca una constraseña segura" />
+        <mat-icon mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" class="primary-icon">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </mat-form-field>
+
+      <div class="container">
+        <button mat-raised-button color="primary" type="submit">Registrarse</button>
+      </div>
+      <br>
+      <p>
+        Si ya tienes una cuenta,
+        <a href="login">inicia sesión</a>
+      </p>
+      <br><br>
+    </form>
+  </mat-card>
+</div>
