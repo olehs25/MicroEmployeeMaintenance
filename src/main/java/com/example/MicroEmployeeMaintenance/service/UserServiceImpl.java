@@ -2,6 +2,7 @@ package com.example.MicroEmployeeMaintenance.service;
 
 import com.example.MicroEmployeeMaintenance.Dao.UserDao;
 import com.example.MicroEmployeeMaintenance.model.User;
+import com.example.MicroEmployeeMaintenance.model.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,9 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     @Transactional
@@ -43,6 +47,13 @@ public class UserServiceImpl implements UserService{
         userDao.delete(person);
 
     }
-
+    public boolean checkUserByEmail(String email){
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }
 

@@ -1,6 +1,6 @@
 package com.example.MicroEmployeeMaintenance.controller;
 
-import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import com.example.MicroEmployeeMaintenance.config.JwtUtil;
@@ -8,7 +8,6 @@ import com.example.MicroEmployeeMaintenance.model.JwtRequest;
 import com.example.MicroEmployeeMaintenance.model.JwtResponse;
 import com.example.MicroEmployeeMaintenance.model.User;
 import com.example.MicroEmployeeMaintenance.model.enums.UserRole;
-import com.example.MicroEmployeeMaintenance.service.UserService;
 import com.example.MicroEmployeeMaintenance.model.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,30 +84,40 @@ public class AuthenticationController {
     public JwtResponse register2(@RequestBody User request)
     {
         User user = new User();
-        user.setUsername(request.getUsername());
+        user.setFullName(request.getFullName());
         String passwordEncode = passEncoder.encode(request.getPassword());
+        user.setActive(1);
         user.setPassword(passwordEncode);
-        user.setCreationDate(request.getCreationDate());
-        user.setLogin(request.getLogin());
+        user.setCreationDate(LocalDateTime.now());
         user.setArea(request.getArea());
         user.setCountry(request.getCountry());
         user.setEmail(request.getEmail());
+        String[] login = user.getEmail().split("@");
+        String part1 = login[0];
+        String part2 = login[1];
+        user.setUsername(part1);
         user.setNif(request.getNif());
         user.setLanguage(request.getLanguage());
         user.setPersonalPhone(request.getPersonalPhone());
-        user.setRole(UserRole.USER);
+        if ((part2.contains("admin"))) {
+            System.out.println("es adminnnnnnnnnnnnnnn:" +part2);
+            user.setRole(UserRole.ADMIN);
+        }else{
+            System.out.println("es userrrrrrrrrrrrrrr: "+part2);
+            user.setRole(UserRole.USER);
+        }
         this.userRepository.save(user);
-
         return  JwtResponse.builder().token(jwtUtil.generateToken(user)).build();
-
     }
 
-    /*
-    @GetMapping("/actual-usuario")
-    public User getUsuarioActual(Principal principal) {
-        return this.userService.findByUsername(principal.getName());
+    @GetMapping(value="actual-usuario/{username}")
+    public Optional<User> getUsuarioActual(@PathVariable String username) {
+        System.out.println("USERNAMEEE: "+username);
+        Optional<User> user = userRepository.findByUsername(username);
+
+        return user;
     }
 
-     */
+
 }
 

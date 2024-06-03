@@ -41,14 +41,13 @@ public class User implements Serializable, UserDetails {
     @Column
     private int active;
     @Column
-    private String login;
-    @Column
     private String language;
     @Column
     private String password;
     @Enumerated(EnumType.STRING)
     private UserRole role;
-
+    @Column
+    private String fullName;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -57,7 +56,6 @@ public class User implements Serializable, UserDetails {
         }
         return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
-
 
     @PrePersist
     @PreUpdate

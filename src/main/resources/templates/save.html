@@ -16,12 +16,6 @@
     <form action="#" th:action="@{/save}" th:object="${employee}"
           method="post">
         &nbsp;
-        <div class="form-group">
-            <label for="fullName">FullName</label> <input type="text" pattern="[a-zA-Z ]{2,254}" size="5" style="width:500px"
-                                                            class="form-control" id="fullName" th:field="*{fullName}"
-                                                            name="fullName" required>
-        </div>
-        &nbsp;
         <input type="hidden" th:field="*{id}" name="id" id="id">
         <div class="form-group">
             <label for="Nif">Nif</label> <input type="text" size="5" style="width:500px"

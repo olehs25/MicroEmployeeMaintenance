@@ -1,5 +1,6 @@
 package com.example.MicroEmployeeMaintenance.model;
 
+import com.example.MicroEmployeeMaintenance.model.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -20,7 +21,7 @@ public class Employee implements Serializable, UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column
+    @Column(unique = true)
     private String username;
     @Column(unique = true)
     private String nif;
@@ -36,9 +37,9 @@ public class Employee implements Serializable, UserDetails {
     @Column
     private int active;
     @Column
-    private String login;
-    @Column
     private String password;
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
     @PrePersist
     @PreUpdate
     private void prepareDate() {

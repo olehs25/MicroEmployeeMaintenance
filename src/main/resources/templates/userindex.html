@@ -51,14 +51,13 @@
             <tr>
                 <th>Id</th>
                 <th>UserName</th>
-                <th>Password</th>
                 <th>Active</th>
                 <th>Area</th>
                 <th>Country</th>
                 <th>CreationDate</th>
                 <th>Email</th>
                 <th>Language</th>
-                <th>Login</th>
+                <th>FullName</th>
                 <th>Nif</th>
                 <th>PersonalPhone</th>
                 <th>Editar</th>
@@ -70,14 +69,13 @@
             <tr th:each="User : ${list}">
                 <td th:text="${User.id}">
                 <td th:text="${User.username}">
-                <td th:text="${User.password}">
                 <td th:text="${User.active}">
                 <td th:text="${User.area}">
                 <td th:text="${User.country}">
                 <td th:text="${User.creationDate}">
                 <td th:text="${User.email}">
                 <td th:text="${User.language}">
-                <td th:text="${User.login}">
+                <td th:text="${User.fullName}">
                 <td th:text="${User.nif}">
                 <td th:text="${User.personalPhone}">
                 <td><a class="btn btn-info" id="exclude"  th:href="@{/user/save/{id}(id=${User.id})}">Editar</a></td>

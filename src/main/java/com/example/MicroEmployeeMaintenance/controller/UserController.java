@@ -1,10 +1,12 @@
 package com.example.MicroEmployeeMaintenance.controller;
 
 import com.example.MicroEmployeeMaintenance.model.User;
+import com.example.MicroEmployeeMaintenance.model.enums.UserRole;
 import com.example.MicroEmployeeMaintenance.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -12,13 +14,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+@CrossOrigin
 @RestController
 @RequestMapping("/api/v1")
 public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private PasswordEncoder passEncoder;
 
     @GetMapping(value="/getUsers")
     public ResponseEntity<Object> get(){
@@ -66,7 +71,7 @@ public class UserController {
             user.setCreationDate(LocalDateTime.now());
             String[] login = user.getEmail().split("@");
             String part1 = login[0];
-            user.setLogin(part1);
+            user.setUsername(part1);
             user.setActive(1);
             User res = userService.save(user);
             return new ResponseEntity<Object>(res,HttpStatus.OK);
@@ -81,20 +86,27 @@ public class UserController {
     public ResponseEntity<Object> update(@RequestBody User employee, @PathVariable Long id){
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-
+            System.out.println("NOMBREEE: "+employee.getFullName());
             User currentEmployee = userService.findById(id);
             currentEmployee.setUsername(employee.getUsername());
+            currentEmployee.setActive(1);
+            currentEmployee.setPassword(currentEmployee.getPassword());
+            currentEmployee.setFullName(employee.getFullName());
             currentEmployee.setNif(employee.getNif());
             currentEmployee.setPersonalPhone(employee.getPersonalPhone());
             currentEmployee.setEmail(employee.getEmail());
-            currentEmployee.setArea(employee.getArea());
             currentEmployee.setCountry(employee.getCountry());
-            currentEmployee.setPassword(employee.getPassword());
-            currentEmployee.setLanguage(employee.getLanguage());
+            currentEmployee.setRole(UserRole.USER);
             if(employee.getCreationDate()==null){
                 currentEmployee.setCreationDate(currentEmployee.getCreationDate());
             }
-
+            if(employee.getId()==null){
+                currentEmployee.setId(currentEmployee.getId());
+            }
+            if(employee.getLanguage()==null){
+                currentEmployee.setLanguage(currentEmployee.getLanguage());
+            }
+            userService.save(currentEmployee);
             return new ResponseEntity<Object>(currentEmployee,HttpStatus.OK);
         }
         catch (Exception e) {
@@ -116,5 +128,10 @@ public class UserController {
             map.put("Unable to delete user with this id", e.getMessage());
             return new ResponseEntity<>( map, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping("/checkEmail/{email}")
+    public Boolean checkEmail(@PathVariable String email) {
+        return userService.checkUserByEmail(email);
     }
 }

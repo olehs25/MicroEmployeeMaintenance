@@ -44,7 +44,7 @@ public class UserControllerWeb {
         user.setActive(1);
         String[] login = user.getEmail().split("@");
         String part1 = login[0];
-        user.setLogin(part1);
+        user.setUsername(part1);
         user.setCreationDate(LocalDateTime.now());
         String passwordEncode = passEncoder.encode(user.getPassword());
         user.setPassword(passwordEncode);

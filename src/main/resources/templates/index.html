@@ -50,13 +50,13 @@
             <tr>
                 <th>Id</th>
                 <th>UserName</th>
-                <th>Nif</th>
+
                 <th>PersonalPhone</th>
                 <th>Email</th>
                 <th>Area</th>
                 <th>CreationDate</th>
                 <th>Active</th>
-                <th>Login</th>
+                <th>Nif</th>
                 <th>Editar</th>
                 <th>Eliminar</th>
 
@@ -72,7 +72,6 @@
                 <td th:text="${Employee.area}">
                 <td th:text="${Employee.creationDate}">
                 <td th:text="${Employee.active}">
-                <td th:text="${Employee.login}">
                 <td><a class="btn btn-info" id="exclude"  th:href="@{/save/{id}(id=${Employee.id})}">Editar</a></td>
                 <td><a class="btn btn-danger" data-toggle="modal" id="exclude2" th:href="@{/delete/{id}(id=${Employee.id})}">Eliminar</a></td>
             </tr>

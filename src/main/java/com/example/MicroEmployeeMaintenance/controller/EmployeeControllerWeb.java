@@ -41,7 +41,7 @@ public class EmployeeControllerWeb {
         employee.setActive(1);
         String[] login = employee.getEmail().split("@");
         String part1 = login[0];
-        employee.setLogin(part1);
+        employee.setUsername(part1);
         employeeServiceWeb.save(employee);
         return "redirect:/";
     }
