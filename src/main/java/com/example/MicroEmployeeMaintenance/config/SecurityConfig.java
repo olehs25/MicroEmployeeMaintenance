@@ -49,11 +49,8 @@ public class SecurityConfig {
                 // public routes
                 .authorizeHttpRequests()
                 .requestMatchers(AntPathRequestMatcher.antMatcher("/auth/**")).permitAll()
-                .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.GET)).permitAll()
-                .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.OPTIONS)).permitAll()
-                 .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.PUT)).permitAll()
-                 .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.POST)).permitAll()
-                 .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.DELETE)).permitAll()
+                 .requestMatchers(AntPathRequestMatcher.antMatcher("/user/**")).permitAll()
+                 .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.OPTIONS)).permitAll()
                 .anyRequest().authenticated()
                 .and()
                  .authenticationProvider(authProvider)

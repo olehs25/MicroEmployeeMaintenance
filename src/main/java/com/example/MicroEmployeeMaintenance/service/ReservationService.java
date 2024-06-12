@@ -1,7 +1,6 @@
 package com.example.MicroEmployeeMaintenance.service;
 
 import com.example.MicroEmployeeMaintenance.model.Reservation;
-import com.example.MicroEmployeeMaintenance.model.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

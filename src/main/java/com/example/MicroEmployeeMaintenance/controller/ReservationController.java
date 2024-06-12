@@ -21,7 +21,7 @@ public class ReservationController {
     @Autowired
     private ReservationService reservationService;
 
-    @GetMapping(value="/getReservations")
+    @GetMapping(value="getReservations")
     public ResponseEntity<Object> get(){
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -34,7 +34,7 @@ public class ReservationController {
         }
     }
 
-    @GetMapping(value="/getReservation/{id}")
+    @GetMapping(value="getReservation/{id}")
     public ResponseEntity<Object> getById(@PathVariable Long id){
         try {
             Reservation data  = reservationService.findById(id);
@@ -47,7 +47,7 @@ public class ReservationController {
         }
     }
 
-    @GetMapping(value="/getReservationByUserEmail/{userEmail}")
+    @GetMapping(value="getReservationByUserEmail/{userEmail}")
     public ResponseEntity<Object> getReservationByUserEmail(@PathVariable String useEmail){
         try {
             Reservation data  = reservationService.findReservationByUseEmail(useEmail);
@@ -60,7 +60,7 @@ public class ReservationController {
         }
     }
 
-    @DeleteMapping("/deleteReservation/{id}")
+    @DeleteMapping("deleteReservation/{id}")
     public ResponseEntity<Object> delete(@PathVariable Long id){
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -75,7 +75,7 @@ public class ReservationController {
         }
     }
 
-    @PostMapping(value="/putReservation")
+    @PostMapping(value="putReservation")
     public ResponseEntity<Object> create(@RequestBody Reservation reservation){
         Map<String, Object> map = new HashMap<String, Object>();
         try {

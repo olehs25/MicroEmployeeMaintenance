@@ -55,5 +55,11 @@ public class UserServiceImpl implements UserService{
             return true;
         }
     }
+
+    public User subscribeUser(Long id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        user.setIsSuscribed(1);
+        return userRepository.save(user);
+    }
 }
 

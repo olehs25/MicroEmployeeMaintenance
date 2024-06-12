@@ -1,6 +1,7 @@
 package com.example.MicroEmployeeMaintenance.controller;
 
 import com.example.MicroEmployeeMaintenance.model.User;
+import com.example.MicroEmployeeMaintenance.model.enums.UserRole;
 import com.example.MicroEmployeeMaintenance.service.UserServiceWeb;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -44,10 +45,21 @@ public class UserControllerWeb {
         user.setActive(1);
         String[] login = user.getEmail().split("@");
         String part1 = login[0];
+        String part2 = login[1];
         user.setUsername(part1);
+        if ((part2.contains("admin"))) {
+            System.out.println("es adminnnnnnnnnnnnnnn:" +part2);
+            user.setRole(UserRole.ADMIN);
+        }else{
+            System.out.println("es userrrrrrrrrrrrrrr: "+part2);
+            user.setRole(UserRole.USER);
+        }
         user.setCreationDate(LocalDateTime.now());
-        String passwordEncode = passEncoder.encode(user.getPassword());
-        user.setPassword(passwordEncode);
+        if(user.getPassword()!=null) {
+            String passwordEncode = passEncoder.encode(user.getPassword());
+            user.setPassword(passwordEncode);
+        }
+        user.setIsSuscribed(0);
         userServiceWeb.save(user);
         return "redirect:/user";
     }
@@ -56,7 +68,6 @@ public class UserControllerWeb {
     @GetMapping("/user/delete/{id}")
     public String delete(@PathVariable Long id, Model model) {
         userServiceWeb.delete(id);
-
         return "redirect:/user";
     }
 

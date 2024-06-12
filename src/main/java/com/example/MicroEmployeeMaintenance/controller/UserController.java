@@ -3,6 +3,7 @@ package com.example.MicroEmployeeMaintenance.controller;
 import com.example.MicroEmployeeMaintenance.model.User;
 import com.example.MicroEmployeeMaintenance.model.enums.UserRole;
 import com.example.MicroEmployeeMaintenance.service.UserService;
+import com.example.MicroEmployeeMaintenance.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserServiceImpl userServiceImpl;
 
     @Autowired
     private PasswordEncoder passEncoder;
@@ -90,13 +94,14 @@ public class UserController {
             User currentEmployee = userService.findById(id);
             currentEmployee.setUsername(employee.getUsername());
             currentEmployee.setActive(1);
-            currentEmployee.setPassword(currentEmployee.getPassword());
+            String passwordEncode = passEncoder.encode(employee.getPassword());
+            currentEmployee.setPassword(passwordEncode);
             currentEmployee.setFullName(employee.getFullName());
             currentEmployee.setNif(employee.getNif());
             currentEmployee.setPersonalPhone(employee.getPersonalPhone());
             currentEmployee.setEmail(employee.getEmail());
             currentEmployee.setCountry(employee.getCountry());
-            currentEmployee.setRole(UserRole.USER);
+            currentEmployee.setRole(currentEmployee.getRole());
             if(employee.getCreationDate()==null){
                 currentEmployee.setCreationDate(currentEmployee.getCreationDate());
             }
@@ -133,5 +138,11 @@ public class UserController {
     @GetMapping("/checkEmail/{email}")
     public Boolean checkEmail(@PathVariable String email) {
         return userService.checkUserByEmail(email);
+    }
+
+    @PutMapping("/{userId}/subscribe")
+    public User subscribeUser(@PathVariable Long userId) {
+        System.out.println("Llega id:" +userId);
+        return userServiceImpl.subscribeUser(userId);
     }
 }

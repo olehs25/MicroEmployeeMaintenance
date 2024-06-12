@@ -64,7 +64,6 @@ public class AuthenticationController {
 
     @GetMapping(value = "register")
     public User register(@RequestBody String username){
-
         return userRepository.findByUsername(username).orElseThrow();
     }
 
@@ -87,9 +86,9 @@ public class AuthenticationController {
         user.setFullName(request.getFullName());
         String passwordEncode = passEncoder.encode(request.getPassword());
         user.setActive(1);
+        user.setIsSuscribed(0);
         user.setPassword(passwordEncode);
         user.setCreationDate(LocalDateTime.now());
-        user.setArea(request.getArea());
         user.setCountry(request.getCountry());
         user.setEmail(request.getEmail());
         String[] login = user.getEmail().split("@");
@@ -114,7 +113,6 @@ public class AuthenticationController {
     public Optional<User> getUsuarioActual(@PathVariable String username) {
         System.out.println("USERNAMEEE: "+username);
         Optional<User> user = userRepository.findByUsername(username);
-
         return user;
     }
 

@@ -33,8 +33,6 @@ public class User implements Serializable, UserDetails {
     private String email;
     @Column
     private String country;
-    @Column
-    private String area;
     @GeneratedValue
     @LastModifiedDate
     private LocalDateTime creationDate;
@@ -48,11 +46,15 @@ public class User implements Serializable, UserDetails {
     private UserRole role;
     @Column
     private String fullName;
+    @Column
+    private int isSuscribed;
+    @Column
+    private String photo;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if (this.role == UserRole.ADMIN) {
-            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"));
         }
         return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
@@ -60,7 +62,6 @@ public class User implements Serializable, UserDetails {
     @PrePersist
     @PreUpdate
     private void prepareDate() {
-
         this.email = email == null ? null : email.toLowerCase();
         this.nif = nif == null ? null : nif.toUpperCase();
     }
