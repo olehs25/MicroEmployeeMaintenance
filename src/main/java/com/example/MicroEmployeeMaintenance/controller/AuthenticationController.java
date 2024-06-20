@@ -1,6 +1,8 @@
 package com.example.MicroEmployeeMaintenance.controller;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import com.example.MicroEmployeeMaintenance.config.JwtUtil;
@@ -98,13 +100,7 @@ public class AuthenticationController {
         user.setNif(request.getNif());
         user.setLanguage(request.getLanguage());
         user.setPersonalPhone(request.getPersonalPhone());
-        if ((part2.contains("admin"))) {
-            System.out.println("es adminnnnnnnnnnnnnnn:" +part2);
-            user.setRole(UserRole.ADMIN);
-        }else{
-            System.out.println("es userrrrrrrrrrrrrrr: "+part2);
-            user.setRole(UserRole.USER);
-        }
+        user.setRole(UserRole.USER);
         this.userRepository.save(user);
         return  JwtResponse.builder().token(jwtUtil.generateToken(user)).build();
     }
@@ -116,6 +112,29 @@ public class AuthenticationController {
         return user;
     }
 
+    @PutMapping("/updatePassword/{id}")
+    public ResponseEntity<Object> updatePassword(@PathVariable Long id, @RequestBody Map<String, String> passwordData) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+            String currentPassword = passwordData.get("currentPassword");
+            String newPassword = passwordData.get("newPassword");
+
+            if (!passEncoder.matches(currentPassword, user.getPassword())) {
+                response.put("message", "Current password is incorrect");
+                return ResponseEntity.status(400).body(response);
+            }
+
+            user.setPassword(passEncoder.encode(newPassword));
+            userRepository.save(user);
+            response.put("message", "Password updated successfully");
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            response.put("message", "Error updating password");
+            response.put("error", e.getMessage());
+            return ResponseEntity.status(500).body(response);
+        }
+    }
 
 }
 
