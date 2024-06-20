@@ -1,15 +1,16 @@
 package com.example.MicroEmployeeMaintenance.controller;
 
 import com.example.MicroEmployeeMaintenance.model.User;
-import com.example.MicroEmployeeMaintenance.model.enums.UserRole;
+import com.example.MicroEmployeeMaintenance.model.UserRepository;
 import com.example.MicroEmployeeMaintenance.service.UserService;
 import com.example.MicroEmployeeMaintenance.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
+import com.example.MicroEmployeeMaintenance.config.JwtUtil;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -24,10 +25,16 @@ public class UserController {
     private UserService userService;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private UserServiceImpl userServiceImpl;
 
     @Autowired
     private PasswordEncoder passEncoder;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @GetMapping(value="/getUsers")
     public ResponseEntity<Object> get(){
@@ -90,33 +97,42 @@ public class UserController {
     public ResponseEntity<Object> update(@RequestBody User employee, @PathVariable Long id){
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            System.out.println("NOMBREEE: "+employee.getFullName());
+            System.out.println("NOMBREEE: " + employee.getFullName());
             User currentEmployee = userService.findById(id);
             currentEmployee.setUsername(employee.getUsername());
             currentEmployee.setActive(1);
-            String passwordEncode = passEncoder.encode(employee.getPassword());
-            currentEmployee.setPassword(passwordEncode);
             currentEmployee.setFullName(employee.getFullName());
             currentEmployee.setNif(employee.getNif());
             currentEmployee.setPersonalPhone(employee.getPersonalPhone());
             currentEmployee.setEmail(employee.getEmail());
             currentEmployee.setCountry(employee.getCountry());
             currentEmployee.setRole(currentEmployee.getRole());
-            if(employee.getCreationDate()==null){
+            if (employee.getCreationDate() == null) {
                 currentEmployee.setCreationDate(currentEmployee.getCreationDate());
             }
-            if(employee.getId()==null){
+            if (employee.getId() == null) {
                 currentEmployee.setId(currentEmployee.getId());
             }
-            if(employee.getLanguage()==null){
+            if (employee.getLanguage() == null) {
                 currentEmployee.setLanguage(currentEmployee.getLanguage());
             }
+            if (employee.getPassword() == null) {
+                currentEmployee.setLanguage(currentEmployee.getPassword());
+            }
             userService.save(currentEmployee);
-            return new ResponseEntity<Object>(currentEmployee,HttpStatus.OK);
-        }
-        catch (Exception e) {
+
+            // Generar un nuevo token JWT
+            UserDetails userDetails = userRepository.findByUsername(currentEmployee.getUsername()).orElseThrow();
+            String token = jwtUtil.generateToken(userDetails);
+
+            // Crear la respuesta con el usuario actualizado y el nuevo token
+            map.put("user", currentEmployee);
+            map.put("token", token);
+
+            return new ResponseEntity<>(map, HttpStatus.OK);
+        } catch (Exception e) {
             map.put("The user could not be added with this data", e.getMessage());
-            return new ResponseEntity<>( map, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(map, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -137,11 +153,13 @@ public class UserController {
 
     @GetMapping("/checkEmail/{email}")
     public Boolean checkEmail(@PathVariable String email) {
+        System.out.println("eEEEEEEEEmail: "+email);
+
         return userService.checkUserByEmail(email);
     }
 
     @PutMapping("/{userId}/subscribe")
-    public User subscribeUser(@PathVariable Long userId) {
+    public ResponseEntity<Object> subscribeUser(@PathVariable Long userId) {
         System.out.println("Llega id:" +userId);
         return userServiceImpl.subscribeUser(userId);
     }

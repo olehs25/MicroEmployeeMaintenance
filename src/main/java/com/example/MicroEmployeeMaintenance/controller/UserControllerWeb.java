@@ -47,11 +47,11 @@ public class UserControllerWeb {
         String part1 = login[0];
         String part2 = login[1];
         user.setUsername(part1);
-        if ((part2.contains("admin"))) {
-            System.out.println("es adminnnnnnnnnnnnnnn:" +part2);
+        if ((part1.contains("admin"))) {
+            System.out.println("es adminnnnnnnnnnnnnnn:" +part1);
             user.setRole(UserRole.ADMIN);
         }else{
-            System.out.println("es userrrrrrrrrrrrrrr: "+part2);
+            System.out.println("es userrrrrrrrrrrrrrr: "+part1);
             user.setRole(UserRole.USER);
         }
         user.setCreationDate(LocalDateTime.now());
