@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService{
             user.setIsSuscribed(1);
             userRepository.save(user);
 
-            // Generar un nuevo token JWT
+            // Generar un nuevo token JWT de usaurio actualizado
             UserDetails userDetails = userRepository.findByUsername(user.getUsername()).orElseThrow();
             String token = jwtUtil.generateToken(userDetails);
 

@@ -41,6 +41,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers(AntPathRequestMatcher.antMatcher("/auth/**")).permitAll()
                  .requestMatchers(AntPathRequestMatcher.antMatcher("/user/**")).permitAll()
+                 .requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/checkEmail/{email}")).permitAll()
                  .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.OPTIONS)).permitAll()
                 .anyRequest().authenticated()
                 .and()

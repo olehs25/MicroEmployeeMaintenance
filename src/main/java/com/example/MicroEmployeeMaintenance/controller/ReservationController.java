@@ -3,7 +3,9 @@ package com.example.MicroEmployeeMaintenance.controller;
 import com.example.MicroEmployeeMaintenance.model.Reservation;
 import com.example.MicroEmployeeMaintenance.model.User;
 import com.example.MicroEmployeeMaintenance.service.ReservationService;
+import com.example.MicroEmployeeMaintenance.service.ReservationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +22,9 @@ public class ReservationController {
 
     @Autowired
     private ReservationService reservationService;
+
+    @Autowired
+    private ReservationServiceImpl reservationServiceImpl;
 
     @GetMapping(value="getReservations")
     public ResponseEntity<Object> get(){
@@ -82,11 +87,24 @@ public class ReservationController {
             reservation.setCreationDate(LocalDateTime.now());
             reservation.setIsCreated(1);
             Reservation res = reservationService.save(reservation);
-            return new ResponseEntity<Object>(res,HttpStatus.OK);
+            System.out.println("ID DE LA RESERVAA: "+res.getId());
+            return new ResponseEntity<>(res,HttpStatus.OK);
         }
         catch (Exception e) {
-            map.put("The reservation with this data does not exist", e.getMessage());
+            map.put("The reservation with this data not exist", e.getMessage());
             return new ResponseEntity<>( map, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/updateReservation/{id}")
+    public ResponseEntity<Object> updateReservation(@PathVariable Long id, @RequestBody Reservation reservationDetails) {
+        Map<String, Object> map = new HashMap<>();
+        try {
+            Reservation updatedReservation = reservationServiceImpl.updateReservation(id, reservationDetails);
+            return new ResponseEntity<>(updatedReservation, HttpStatus.OK);
+        } catch (Exception e) {
+            map.put("message", "Unable to update reservation");
+            return new ResponseEntity<>(map, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

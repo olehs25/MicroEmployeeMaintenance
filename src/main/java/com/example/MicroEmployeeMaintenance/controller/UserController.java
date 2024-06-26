@@ -121,7 +121,7 @@ public class UserController {
             }
             userService.save(currentEmployee);
 
-            // Generar un nuevo token JWT
+            // Generar un nuevo token JWT para usuario actualizado
             UserDetails userDetails = userRepository.findByUsername(currentEmployee.getUsername()).orElseThrow();
             String token = jwtUtil.generateToken(userDetails);
 
